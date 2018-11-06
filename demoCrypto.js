@@ -1,9 +1,13 @@
-// https://gist.github.com/jo/8619441#gistcomment-1711368, List of JavaScript Crypto libraries.
+// List of JavaScript Crypto libraries, https://gist.github.com/jo/8619441#gistcomment-1711368
+// WebCrypto Polyfill for Node: https://github.com/PeculiarVentures/node-webcrypto-ossl
 // https://github.com/diafygi/webcrypto-examples
 
 const WebCrypto = require("node-webcrypto-ossl")
 const { TextEncoder, TextDecoder } = require("text-encoder")
 const webcrypto = new WebCrypto()
+
+const nacl = require("tweetnacl")
+const naclUtil = require("tweetnacl-util")
 
 const run = action => action()
 
@@ -16,7 +20,6 @@ run(async () => {
       name: "SHA-1"
     }
   }, false, ["sign", "verify"])
-
 
   const { privateKey, publicKey } = keys
 
@@ -32,8 +35,8 @@ run(async () => {
   console.log("private key:", privateKey)
   console.log("public key:", publicKey)
 
-  console.log("data:", data)
-  console.log("signature:", signature)
+  console.log("data:", naclUtil.encodeBase64(new Uint8Array(data)))
+  console.log("signature:", naclUtil.encodeBase64(new Uint8Array(signature)))
 
   const result = await webcrypto.subtle.verify(
     "RSASSA-PKCS1-v1_5",
@@ -43,11 +46,11 @@ run(async () => {
   )
   console.log(result)
 
-  const result2 = await webcrypto.subtle.verify(
+  const fakeResult = await webcrypto.subtle.verify(
     "RSASSA-PKCS1-v1_5",
     publicKey,
     signature,
     fakeData
   )
-  console.log(result2)
+  console.log(fakeResult)
 })
