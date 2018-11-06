@@ -1,0 +1,12 @@
+{
+  "name": "miniguide-license-keys",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hastebrot/miniguide-license-keys",
+  "author": "Benjamin Gudehus <hastebrot@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-webcrypto-ossl": "^1.0.38",
+    "text-encoder": "^0.0.4"
+  }
+}
