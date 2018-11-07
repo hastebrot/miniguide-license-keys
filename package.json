@@ -6,9 +6,18 @@
   "author": "Benjamin Gudehus <hastebrot@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "core-js": "^2.5.7",
     "node-webcrypto-ossl": "^1.0.38",
     "text-encoder": "^0.0.4",
     "tweetnacl": "^1.0.0",
     "tweetnacl-util": "^0.15.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "es3ify": "^0.2.2",
+    "uglifyify": "^5.0.1"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/browserify standalone/browser.js -t es3ify -g [ uglifyify --mangle --compress ] -o standalone/browser.dist.js"
   }
 }
